@@ -1,0 +1,5 @@
+{
+  "name": "Trợ lý Năng lực số Cho Giáo Viên",
+  "description": "Một ứng dụng web giúp tạo prompt tích hợp Năng lực số (NLS) cho kế hoạch dạy học một cách nhanh chóng và chính xác, dựa trên các thông tư và công văn giáo dục hiện hành.",
+  "requestFramePermissions": []
+}
