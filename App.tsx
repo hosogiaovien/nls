@@ -413,6 +413,18 @@ Hãy xác nhận bạn đã nhận đủ 3 file và hiểu rõ nhiệm vụ ch�
             Quốc Hưng
           </a>
         </p>
+        <div className="flex items-center justify-center space-x-2 mt-2">
+            <span>Số lượt truy cập:</span>
+            <a href="https://www.hitwebcounter.com" target="_blank" rel="noopener noreferrer">
+              <img 
+                src="https://hitwebcounter.com/counter/counter.php?page=trolyso_nls_app_qh&style=0006&nbdigits=7" 
+                title="Total Website Hits" 
+                alt="Visitor Counter" 
+                // @ts-ignore
+                border="0" 
+              />
+            </a>
+        </div>
       </footer>
     </div>
   );
