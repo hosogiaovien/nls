@@ -417,7 +417,7 @@ Hãy xác nhận bạn đã nhận đủ 3 file và hiểu rõ nhiệm vụ ch�
             <span>Số lượt truy cập:</span>
             <a href="https://www.hitwebcounter.com" target="_blank" rel="noopener noreferrer">
               <img 
-                src="https://hitwebcounter.com/counter/counter.php?page=nls_rho_vercel_app&style=0006&nbdigits=7" 
+                src="https://hitwebcounter.com/counter/counter.php?page=21455809&style=0042&nbdigits=5&type=page&initCount=589" 
                 title="Total Website Hits" 
                 alt="Visitor Counter" 
                 // @ts-ignore
