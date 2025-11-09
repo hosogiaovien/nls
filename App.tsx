@@ -5,13 +5,14 @@ const App = () => {
   // State management for form inputs
   const [monHoc, setMonHoc] = useState('');
   const [khoiLop, setKhoiLop] = useState<number | null>(null);
-  const [phuLuc, setPhuLuc] = useState<string | null>(null); // 'pl1' or 'pl3'
+  const [phuLuc, setPhuLuc] = useState<string | null>(null); // 'pl1', 'pl3', or 'pl4'
   const [fileName, setFileName] = useState('');
   const [generatedPrompt, setGeneratedPrompt] = useState('');
   const [error, setError] = useState('');
 
   const fileInputRef1 = useRef<HTMLInputElement>(null);
   const fileInputRef3 = useRef<HTMLInputElement>(null);
+  const fileInputRef4 = useRef<HTMLInputElement>(null);
 
   // Prompt templates
   const promptTemplate1 = `Tạo **PHỤ LỤC 1: TÍCH HỢP NĂNG LỰC SỐ VÀO KẾ HOẠCH DẠY HỌC (Dành cho Tổ chuyên môn)**
@@ -95,6 +96,61 @@ Bạn là chuyên gia giáo dục Việt Nam. Nhiệm vụ của bạn là hỗ 
 
 **Lưu ý:**
 File Kế hoạch dạy học đính kèm có tên là **\`${fileName}\`**. Hãy xác nhận đã nhận và phân tích được file này trước khi bắt đầu.`;
+  
+  const promptTemplate4 = `Nâng cấp Kế hoạch dạy học: Tích hợp sâu Năng lực số
+
+**Bối cảnh:**
+Bạn là một chuyên gia sư phạm hiện đại, bậc thầy về việc tích hợp Năng lực số (NLS) vào Kế hoạch dạy học (KHDH) theo Chương trình GDPT 2018. Nhiệm vụ của bạn là **KHÔNG** tạo ra một phụ lục mới, mà là **TRỰC TIẾP CHỈNH SỬA VÀ BỔ SUNG** nội dung vào file KHDH **\`${fileName}\`** mà tôi cung cấp. Bạn sẽ làm giàu KHDH bằng cách thêm các mục tiêu NLS và các hoạt động tích hợp cụ thể.
+
+**Tài liệu nguồn (BẮT BUỘC):**
+1.  **\`Thông tư 02/2025/TT-BGDĐT\` (Khung NLS):** Tài liệu gốc để tra cứu và **trích dẫn nguyên văn** các chỉ báo năng lực.
+2.  **\`Công văn 405/SGDĐT-GDTrH Quảng Ngãi\` (knls.pdf):** Tài liệu định hướng để xác định **MỨC ĐỘ** năng lực phù hợp cho khối **\`${khoiLop}\`**.
+3.  **\`${fileName}\` (Kế hoạch dạy học gốc):** Đây là tài liệu chính bạn cần đọc, phân tích và chỉnh sửa.
+
+**Quy trình thực hiện (TUÂN THỦ TUYỆT ĐỐI):**
+
+**Bước 1: Phân tích toàn diện**
+*   Đọc kỹ toàn bộ KHDH trong file **\`${fileName}\`** để nắm vững mục tiêu, nội dung và chuỗi hoạt động của bài học.
+*   Đối chiếu với Công văn 405 để xác định các mức độ NLS phù hợp với khối **\`${khoiLop}\`**.
+
+**Bước 2: Xác định và lựa chọn NLS phù hợp**
+*   Dựa trên nội dung bài học, chọn ra những Năng lực thành phần (ví dụ: 1.1, 3.4, 5.2) và các **chỉ báo cụ thể (gạch đầu dòng)** từ Thông tư 02 mà bài học này có thể hình thành cho học sinh.
+
+**Bước 3: Chỉnh sửa mục "I. Mục tiêu"**
+*   Tìm đến mục **\`+ Các năng lực số:\`** trong KHDH.
+*   Bên dưới dòng này, hãy liệt kê các chỉ báo NLS bạn đã chọn ở Bước 2.
+*   **YÊU CẦU:** Mỗi chỉ báo phải được trình bày theo định dạng: \`[Mã chỉ báo]: [Trích dẫn nguyên văn mô tả từ Thông tư 02]\`.
+*   *Ví dụ:* \`5.2TC1a: Chỉ ra được những nhu cầu được xác định rõ ràng và thường xuyên.\`
+
+**Bước 4: Chỉnh sửa mục "III. Tiến trình dạy học" (CỰC KỲ CHI TIẾT)**
+*   Đi đến mục **\`III. Tiến trình dạy học\`**.
+*   Với **TỪNG HOẠT ĐỘNG** (ví dụ: \`1. Hoạt động 1: Khởi động\`, \`2. Hoạt động 2: Hình thành kiến thức mới\`, v.v.), bạn phải thực hiện tuần tự như sau:
+    1.  **Phân tích nội dung hoạt động:** Đọc kỹ các mục \`a) Mục tiêu\`, \`b) Nội dung\`, \`c) Sản phẩm\`, và \`d) Tổ chức thực hiện\` của hoạt động đó để hiểu rõ giáo viên và học sinh sẽ làm gì.
+    2.  **Liên kết với NLS:** Xác định xem hoạt động này có thể hình thành hoặc củng cố Năng lực số nào bạn đã chọn ở Bước 2.
+    3.  **Chèn nội dung tích hợp:**
+        *   Tìm vị trí **cuối cùng** của hoạt động hiện tại (ngay trước khi bắt đầu hoạt động tiếp theo, ví dụ: ngay trước \`2. Hoạt động 2:...\`).
+        *   Tại vị trí đó, chèn một mục mới, bắt đầu bằng **\`* Tích hợp năng lực số:\`** (in đậm và có dấu sao).
+        *   **QUAN TRỌNG:** Nội dung bạn viết ở đây phải là một **gợi ý sư phạm cụ thể, một hành động thực tế** mà giáo viên có thể tổ chức cho học sinh. Nó phải **diễn giải** chỉ báo NLS thành ngôn ngữ dạy học, **TUYỆT ĐỐI KHÔNG** được trích dẫn lại chỉ báo một cách máy móc.
+        *   **Ví dụ minh họa cấu trúc:**
+            *   **KHDH gốc (một phần):**
+                \`\`\`
+                d) Tổ chức thực hiện: ... (nội dung của hoạt động 1).
+                2. Hoạt động 2: Hình thành kiến thức mới
+                \`\`\`
+            *   **Bạn phải sửa thành:**
+                \`\`\`
+                d) Tổ chức thực hiện: ... (nội dung của hoạt động 1).
+                * Tích hợp năng lực số: Học sinh liệt kê và mô tả được các bước tuần tự trong quy trình thuật toán (ví dụ: nấu cơm, bật quạt, v.v.).
+                2. Hoạt động 2: Hình thành kiến thức mới
+                \`\`\`
+        *   **Lưu ý:** Mục \`* Tích hợp năng lực số:\` phải được đặt bên trong phạm vi của hoạt động đó, nhưng là phần tử cuối cùng trước khi sang hoạt động mới.
+
+**Bước 5: Trả về kết quả**
+*   Sau khi hoàn thành tất cả các bước chỉnh sửa, hãy trả về **TOÀN BỘ NỘI DUNG CỦA KẾ HOẠCH DẠY HỌC ĐÃ ĐƯỢC CẬP NHẬT**.
+*   Sử dụng định dạng Markdown để văn bản dễ đọc và dễ sao chép. Đảm bảo giữ nguyên cấu trúc gốc của KHDH và chỉ thêm vào những phần được yêu cầu.
+
+**Xác nhận:**
+Hãy xác nhận bạn đã nhận đủ 3 file và hiểu rõ nhiệm vụ chỉnh sửa trực tiếp file **\`${fileName}\`** trước khi bắt đầu.`;
 
   // Handle file selection
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -105,7 +161,7 @@ File Kế hoạch dạy học đính kèm có tên là **\`${fileName}\`**. Hãy
   };
 
   // Handle appendix selection
-  const handlePhuLucChange = (value: 'pl1' | 'pl3') => {
+  const handlePhuLucChange = (value: 'pl1' | 'pl3' | 'pl4') => {
     if (phuLuc === value) {
       setPhuLuc(null); // Deselect if clicked again
       setFileName('');
@@ -123,7 +179,7 @@ File Kế hoạch dạy học đính kèm có tên là **\`${fileName}\`**. Hãy
       return;
     }
     setError('');
-    const prompt = phuLuc === 'pl1' ? promptTemplate1 : promptTemplate3;
+    const prompt = phuLuc === 'pl1' ? promptTemplate1 : (phuLuc === 'pl3' ? promptTemplate3 : promptTemplate4);
     setGeneratedPrompt(prompt);
   };
 
@@ -193,7 +249,7 @@ File Kế hoạch dạy học đính kèm có tên là **\`${fileName}\`**. Hãy
               <label className="block text-lg font-medium text-gray-700 mb-2">
                 Chọn Phụ lục
               </label>
-              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
                 {/* Phụ lục 1 */}
                 <div className="flex items-center space-x-3">
                   <input
@@ -204,14 +260,13 @@ File Kế hoạch dạy học đính kèm có tên là **\`${fileName}\`**. Hãy
                     className="h-6 w-6 text-teal-600 border-gray-300 rounded focus:ring-teal-500"
                   />
                   <label htmlFor="phu-luc-1" className="text-lg text-gray-800">Phụ lục 1</label>
-                </div>
-                {phuLuc === 'pl1' && (
+                   {phuLuc === 'pl1' && (
                    <div className="flex-grow">
                     <button
                       onClick={() => fileInputRef1.current?.click()}
                       className="w-full sm:w-auto px-6 py-3 text-lg font-semibold text-black bg-white border-2 border-gray-400 rounded-lg hover:bg-gray-100 transition duration-200"
                     >
-                      {fileName || 'Chọn File Phụ Lục 1'}
+                      {fileName || 'Chọn File KHDH'}
                     </button>
                     <input
                       type="file"
@@ -222,6 +277,8 @@ File Kế hoạch dạy học đính kèm có tên là **\`${fileName}\`**. Hãy
                     />
                   </div>
                 )}
+                </div>
+               
                  {/* Phụ lục 3 */}
                  <div className="flex items-center space-x-3">
                   <input
@@ -232,14 +289,13 @@ File Kế hoạch dạy học đính kèm có tên là **\`${fileName}\`**. Hãy
                     className="h-6 w-6 text-teal-600 border-gray-300 rounded focus:ring-teal-500"
                   />
                   <label htmlFor="phu-luc-3" className="text-lg text-gray-800">Phụ lục 3</label>
-                </div>
-                {phuLuc === 'pl3' && (
+                  {phuLuc === 'pl3' && (
                   <div className="flex-grow">
                      <button
                         onClick={() => fileInputRef3.current?.click()}
                         className="w-full sm:w-auto px-6 py-3 text-lg font-semibold text-black bg-white border-2 border-gray-400 rounded-lg hover:bg-gray-100 transition duration-200"
                       >
-                        {fileName || 'Chọn File Phụ Lục 3'}
+                        {fileName || 'Chọn File KHDH'}
                       </button>
                       <input
                         type="file"
@@ -250,6 +306,37 @@ File Kế hoạch dạy học đính kèm có tên là **\`${fileName}\`**. Hãy
                       />
                   </div>
                 )}
+                </div>
+
+                 {/* Phụ lục 4 */}
+                 <div className="flex items-center space-x-3">
+                  <input
+                    type="checkbox"
+                    id="phu-luc-4"
+                    checked={phuLuc === 'pl4'}
+                    onChange={() => handlePhuLucChange('pl4')}
+                    className="h-6 w-6 text-teal-600 border-gray-300 rounded focus:ring-teal-500"
+                  />
+                  <label htmlFor="phu-luc-4" className="text-lg text-gray-800">Phụ lục 4</label>
+                  {phuLuc === 'pl4' && (
+                  <div className="flex-grow">
+                     <button
+                        onClick={() => fileInputRef4.current?.click()}
+                        className="w-full sm:w-auto px-6 py-3 text-lg font-semibold text-black bg-white border-2 border-gray-400 rounded-lg hover:bg-gray-100 transition duration-200"
+                      >
+                        {fileName || 'Chọn File KHDH'}
+                      </button>
+                      <input
+                        type="file"
+                        ref={fileInputRef4}
+                        onChange={handleFileChange}
+                        className="hidden"
+                        accept=".doc,.docx,.pdf"
+                      />
+                  </div>
+                )}
+                </div>
+
               </div>
             </div>
 
@@ -304,8 +391,8 @@ File Kế hoạch dạy học đính kèm có tên là **\`${fileName}\`**. Hãy
             <h2 className="text-2xl font-bold text-teal-700 mb-6">Hướng dẫn sử dụng</h2>
             <ol className="list-decimal list-inside space-y-4 text-lg text-gray-700">
                 <li>Nhập Tên môn học và chọn Khối lớp.</li>
-                <li>Chọn Phụ lục 1 hoặc Phụ lục 3.</li>
-                <li>Nhấn để chọn file Kế hoạch dạy học.</li>
+                <li>Chọn Phụ lục 1, Phụ lục 3, hoặc Phụ lục 4.</li>
+                <li>Nhấn để chọn file Kế hoạch dạy học tương ứng.</li>
                 <li>Nhấn nút "Tạo câu lệnh" và xem kết quả.</li>
                 <li>Nhấn nút "Sao chép" ở mục kết quả.</li>
                 <li>Mở AI (ChatGPT, Gemini...), dán prompt vào.</li>
@@ -314,7 +401,7 @@ File Kế hoạch dạy học đính kèm có tên là **\`${fileName}\`**. Hãy
                     <a href="https://banlongschool-my.sharepoint.com/:b:/g/personal/hung_bl_edu_vn/EWxI5o-ggiFPmMZGwfh8xYcBTMS0zLnhvFzVWUkgtD6MEQ?e=d0SbDc" target="_blank" rel="noopener noreferrer" className="font-semibold text-teal-600 hover:underline">TT02.pdf</a> và&nbsp;
                     <a href="https://banlongschool-my.sharepoint.com/:b:/g/personal/hung_bl_edu_vn/EeXTCMQ_HPFLjRfWNN62JI0Bew4K5k4n9QsWXKZZK25s4Q?e=JwgyoX" target="_blank" rel="noopener noreferrer" className="font-semibold text-teal-600 hover:underline">knls.pdf</a> về máy.
                 </li>
-                <li>Đính kèm vào khung chat của Ai cùng câu lệnh vừa dán: 2 file TT02.pdf, knls.pdf vừa down về trong "File đính kèm" ở bước 7 và 1 file là phụ lục 1 hoặc phụ lục 3 vừa up ở bước 2 (tổng cộng là 3 file up lên cho Ai) và gửi đi.</li>
+                <li>Đính kèm vào khung chat của Ai cùng câu lệnh vừa dán: 2 file TT02.pdf, knls.pdf vừa down về trong "File đính kèm" ở bước 7 và 1 file là kế hoạch dạy học vừa up ở bước 3 (tổng cộng là 3 file up lên cho Ai) và gửi đi.</li>
                 <li>Hưởng thụ thành quả.</li>
             </ol>
         </section>
